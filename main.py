@@ -28,13 +28,13 @@ mT6 = 0
 
 def persRound(number):
     if(len(str(number).split(".")) == 2):
-        #print(float(str(number).split(".")[1]))
+        print(float(str(number).split(".")[1]))
         if(float(str(number).split(".")[1]) >= 0.5):
             number +=0.5
         elif(float(str(number).split(".")[1]) == 0):
-            number=number
+            number+=0
         else:
-            number-=0.5
+            number+=0.5
         return number
     else:
         print(str(number).split("."))
@@ -143,7 +143,8 @@ while run == True:
             if(mT1 + 0.1 < time.time()):
                 playerPosOld = playerPos
                 playerPos = (playerPos[0] - 32, playerPos[1])
-                if(objectMap[int(persRound((playerPos[1]/64)-0.5))][int(persRound((playerPos[0]/64)-0.5))].canCollide == True):
+                if(objectMap[int(persRound((playerPos[1]/64)-0.5))][
+                    int(persRound((playerPos[0]/64)-0.5))].canCollide is True):
                     playerPos = playerPosOld
                 mT1 = time.time()
         if event.key == pygame.K_RIGHT or event.key == ord('d'):
@@ -151,7 +152,7 @@ while run == True:
                 playerPosOld = playerPos
                 playerPos = (playerPos[0] + 32, playerPos[1])
                 if (objectMap[int(persRound((playerPos[1] / 64) - 0.5))][
-                    int(persRound((playerPos[0] / 64) - 0.5))].canCollide == True):
+                    int(persRound((playerPos[0] / 64) - 0.5))].canCollide is True):
                     playerPos = playerPosOld
                 mT2 = time.time()
         if event.key == pygame.K_DOWN or event.key == ord('s'):
