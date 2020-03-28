@@ -3,3 +3,4 @@ class wall():
         self.texture = ".\\textures\\wall\\wall.png"
         self.type = "wall"
         self.health = 100
+        self.canCollide = True

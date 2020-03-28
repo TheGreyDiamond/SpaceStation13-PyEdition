@@ -11,6 +11,7 @@ class externalDoor():
         self.animationFrame = 0
         self.animationFrameAmount = 5
         self.animationTime = 0
+        self.canCollide = True
 
     def setState(self, newState):
         if newState in doorCycle:
@@ -25,24 +26,28 @@ class externalDoor():
             self.animationStarted = False
             self.cycle = 0
             self.animationFrame = 0
+            self.canCollide = True
         elif (self.state == "open"):
             self.texture = ".\\textures\\door\\external\\open.png"
             self.needsAnimation = False
             self.animationStarted = False
             self.cycle = 2
             self.animationFrame = 0
+            self.canCollide = False
         elif (self.state == "opening"):
             self.texture = ".\\textures\\door\\external\\opening-s.png"
             self.needsAnimation = True
             self.animationStarted = False
             self.cycle = 1
             self.animationFrame = 1
+            self.canCollide = True
         elif (self.state == "closing"):
             self.texture = ".\\textures\\door\\external\\closing-s.png"
             self.needsAnimation = True
             self.animationStarted = False
             self.cycle = 3
             self.animationFrame = 0
+            self.canCollide = True
         else:
             raise Exception("Unknow door state set")
 

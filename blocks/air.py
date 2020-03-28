@@ -3,3 +3,4 @@ class air():
         self.texture = ""
         self.type = "air"
         self.health = 0
+        self.canCollide = False

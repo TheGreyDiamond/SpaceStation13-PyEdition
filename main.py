@@ -22,9 +22,25 @@ mT1 = 0
 mT2 = 0
 mT3 = 0
 mT4 = 0
+mT5 = 0
+mT6 = 0
 
+
+def persRound(number):
+    if(len(str(number).split(".")) == 2):
+        #print(float(str(number).split(".")[1]))
+        if(float(str(number).split(".")[1]) >= 0.5):
+            number +=0.5
+        elif(float(str(number).split(".")[1]) == 0):
+            number=number
+        else:
+            number-=0.5
+        return number
+    else:
+        print(str(number).split("."))
+        return number
 playerPos = (32, 32)
-
+playerPosOld = playerPos
 objectMap = [[blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.walls.wall(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air()],
         [blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.walls.wall(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air()],
         [blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.walls.wall(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air()],
@@ -33,7 +49,7 @@ objectMap = [[blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.walls
         [blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.walls.wall(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air()],
         [blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.walls.wall(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air()],
         [blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.walls.wall(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air()],
-        [blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.walls.wall(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air()],
+        [blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.doors.externalDoor(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air()],
         [blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.walls.wall(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air()],]
 
 floorMap = [[blocks.floors.floor(), blocks.floors.floor(), blocks.floors.floor(), blocks.floors.floor(), blocks.floors.space(), blocks.floors.space(), blocks.floors.space(), blocks.floors.space(), blocks.floors.space(), blocks.floors.space()],
@@ -51,6 +67,7 @@ floorMap = [[blocks.floors.floor(), blocks.floors.floor(), blocks.floors.floor()
 #f_floor = pygame.transform.scale(f_floor, (64,64))
 c = 0
 objectMap[4][3].setState("closing")
+#8 3
 while run == True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -124,43 +141,73 @@ while run == True:
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_LEFT or event.key == ord('a'):
             if(mT1 + 0.1 < time.time()):
+                playerPosOld = playerPos
                 playerPos = (playerPos[0] - 32, playerPos[1])
+                if(objectMap[int(persRound((playerPos[1]/64)-0.5))][int(persRound((playerPos[0]/64)-0.5))].canCollide == True):
+                    playerPos = playerPosOld
                 mT1 = time.time()
         if event.key == pygame.K_RIGHT or event.key == ord('d'):
             if (mT2 + 0.1 < time.time()):
+                playerPosOld = playerPos
                 playerPos = (playerPos[0] + 32, playerPos[1])
+                if (objectMap[int(persRound((playerPos[1] / 64) - 0.5))][
+                    int(persRound((playerPos[0] / 64) - 0.5))].canCollide == True):
+                    playerPos = playerPosOld
                 mT2 = time.time()
         if event.key == pygame.K_DOWN or event.key == ord('s'):
             if (mT3 + 0.1 < time.time()):
+                playerPosOld = playerPos
                 playerPos = (playerPos[0], playerPos[1] + 32)
+                if (objectMap[int(persRound((playerPos[1] / 64) - 0.5))][
+                    int(persRound((playerPos[0] / 64) - 0.5))].canCollide == True):
+                    playerPos = playerPosOld
                 mT3 = time.time()
         if event.key == pygame.K_UP or event.key == ord('w'):
             if (mT4 + 0.1 < time.time()):
+                playerPosOld = playerPos
                 playerPos = (playerPos[0], playerPos[1] - 32)
+                if (objectMap[int(persRound((playerPos[1] / 64) - 0.5))][
+                    int(persRound((playerPos[0] / 64) - 0.5))].canCollide == True):
+                    playerPos = playerPosOld
                 mT4 = time.time()
 
 
+        if event.key == pygame.K_1 or event.key == ord('1'):
+            if (mT5 + 0.1 < time.time()):
 
-    if event.type == pygame.KEYUP:
-        if event.key == pygame.K_LEFT or event.key == ord('a'):
-            print('left stop')
-        if event.key == pygame.K_RIGHT or event.key == ord('d'):
-            print('right stop')
-        if event.key == ord('q'):
-            pygame.quit()
-            sys.exit()
-            run = False
+                objectMap[4][3].cycleState()
+                mT5 = time.time()
+        if event.key == pygame.K_2 or event.key == ord('2'):
+            if (mT6 + 0.1 < time.time()):
+                objectMap[8][3].cycleState()
+                mT6 = time.time()
+
+
+
+    #if event.type == pygame.KEYUP:
+    #    if event.key == pygame.K_LEFT or event.key == ord('a'):
+    #        print('left stop')
+    #    if event.key == pygame.K_RIGHT or event.key == ord('d'):
+    #        print('right stop')
+    #    if event.key == ord('q'):
+    #        pygame.quit()
+    #        sys.exit()
+    #        run = False
 
             # Draw "player"
     pygame.draw.circle(screen, (255,0,0), playerPos, 25)
+    #print("Collider check for " + str(persRound((playerPos[0]/64)-0.5)) + " " + str(persRound((playerPos[1]/64)-0.5)))
+    #print(playerPos)
+    #print("-----------------")
 
 
 
-    print("Whole draw done")
-    #if(c == 250):
-    #    print("door cycle")
-    #    objectMap[4][3].cycleState()
-    #    c = 0
+    #print("Whole draw done")
+    if(c == 150):
+        print("door cycle")
+
+        #
+        c = 0
 
     c -=-1
     pygame.display.flip()
