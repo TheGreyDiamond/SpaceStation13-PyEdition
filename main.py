@@ -18,7 +18,12 @@ run = True
 i = 0
 i2 = 0
 
-playerPos = (0, 0)
+mT1 = 0
+mT2 = 0
+mT3 = 0
+mT4 = 0
+
+playerPos = (32, 32)
 
 objectMap = [[blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.walls.wall(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air()],
         [blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.walls.wall(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air(), blocks.air.air()],
@@ -115,6 +120,39 @@ while run == True:
             i-=-1
         i2 -=- 1
 
+    ##Move player
+    if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_LEFT or event.key == ord('a'):
+            if(mT1 + 0.1 < time.time()):
+                playerPos = (playerPos[0] - 32, playerPos[1])
+                mT1 = time.time()
+        if event.key == pygame.K_RIGHT or event.key == ord('d'):
+            if (mT2 + 0.1 < time.time()):
+                playerPos = (playerPos[0] + 32, playerPos[1])
+                mT2 = time.time()
+        if event.key == pygame.K_DOWN or event.key == ord('s'):
+            if (mT3 + 0.1 < time.time()):
+                playerPos = (playerPos[0], playerPos[1] + 32)
+                mT3 = time.time()
+        if event.key == pygame.K_UP or event.key == ord('w'):
+            if (mT4 + 0.1 < time.time()):
+                playerPos = (playerPos[0], playerPos[1] - 32)
+                mT4 = time.time()
+
+
+
+    if event.type == pygame.KEYUP:
+        if event.key == pygame.K_LEFT or event.key == ord('a'):
+            print('left stop')
+        if event.key == pygame.K_RIGHT or event.key == ord('d'):
+            print('right stop')
+        if event.key == ord('q'):
+            pygame.quit()
+            sys.exit()
+            run = False
+
+            # Draw "player"
+    pygame.draw.circle(screen, (255,0,0), playerPos, 25)
 
 
 
